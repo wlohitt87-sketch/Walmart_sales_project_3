@@ -65,20 +65,30 @@ files.download('walmart_sales.csv')
 
 - **Importing the data to database**
 
+**2.Exploratory Data Analysis**
 ```
 SELECT * 
 FROM [dbo].[Walmart_sales]
-
+```
+```
+SELECT COUNT(*)
+FROM walmart_sales
+```
+```
+SELECT payment_method, COUNT(*)  
+FROM walmart_sales
+GROUP BY payment_method
+```
 **3.Business Problems**
 
 **--1. Find different payment method and number of transaction, number of qty sold**
-
+```
 SELECT payment_method, COUNT(*) AS Total_transaction, SUM(quantity) AS Total_quantity  
 FROM walmart_sales
 GROUP BY payment_method
-
+```
 **--2. Identify the highest-rated category in each branch, displaying the branch, category AVG rating**
-
+```
 WITH CategoryRatings AS (
     SELECT 
         Branch, 
@@ -94,9 +104,9 @@ SELECT Branch,
        rank
 FROM CategoryRatings 
 WHERE rank = 1
-
+```
 **--3. Identify the busiest day for each branch based on the number of transactions.**
-
+```
 WITH dailytransactioncount AS(
     SELECT Branch,
            DATENAME(WEEKDAY,date) AS day_name,
@@ -111,6 +121,11 @@ SELECT Branch,
        rank1
 FROM dailytransactioncount
 WHERE rank1 = 1
+```
+
+## Conclusion
+
+This analysis helps Walmart understand its sales dynamics, customer preferences, and operational inefficiencies. By combining Python for data wrangling and SQL for structured exploration, the business can make informed decisions to optimize performance and enhance customer satisfaction.
 
 
 
