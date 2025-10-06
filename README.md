@@ -6,7 +6,7 @@
 
 The Walmart Sales Analysis project aims to explore and analyze sales data to uncover patterns, trends, and insights that can drive business decisions. The process involves data cleaning, transformation, and exploration using tools such as Python (Jupyter Notebook) and SQL Server.
 
-### 2. Importing Raw Data into Jupyter Notebook
+### 1. Importing Raw Data into Jupyter Notebook
 
 ```
 !pip install opendatasets
@@ -23,56 +23,53 @@ from sqlalchemy import create_engine
 ```
 df = pd.read_csv("/content/walmart-10k-sales-datasets/Walmart.csv")
 ```    
+### 2. Data exploration & cleaning
+```
+df.describe()
+```
+```
+df.info()
+```
+**-- Find NULL & DUPLICATES Value**
+```
+df.drop_duplicates(inplace=True)
+df.duplicated().sum()
+```
+```
+df.isnull().sum()
+```
+**--Drop the NULL Values if not needed**
 
-**Database Name**: 'Walmart_data'
+### 3. Following data analysis and cleaning, I saved the file to my device and imported it into SQL Server.
+```
+df.to_csv('walmart_sales.csv', index=False)
 
-In order to examine, clean, and analyze retail sales data, data analysts often use SQL skills and methodologies, which this project aims to illustrate.  The project entails creating a database for retail sales, conducting exploratory data analysis (EDA), and using SQL queries to find answers to certain business issues.  For people just starting out in data analysis who wish to establish a strong foundation in SQL, this project is perfect.
+from google.colab import files
+files.download('walmart_sales.csv')
+```
+
+### 4. Creating Database
 
 ## Objectives
 
- 1. **Set up a retail sales database**
- 2. **Data Cleaning**
- 3. **Exploratory Data Analysis (EDA)**
- 4. **Business Analysis**
+ 1. **Set up a Walmart sales database** 
+ 2. **Exploratory Data Analysis (EDA)**
+ 3. **Business Analysis**
 
-## Project Structure    
+**1. Database Setup**
 
-### 1. Database Setup
-
-- **Database Creation**: The project starts by creating a database named project_1.
+- **Database Creation**: The project starts by creating a database named Walmart_data.
 
 - **Table Creation**: A table named Walmart_sales is created to store the sales data. The table structure includes columns for invoice_id,Branch
 ,City,category,unit_price,quantity,date,time,payment_method,rating,profit_margin and Total.
+
+- **Importing the data to database**
 
 ```
 SELECT * 
 FROM [dbo].[Walmart_sales]
 
-### 2. Data Exploration & Cleaning
-
-- **Record Count**: Determine the total number of records in the dataset.
-- **Category Count**: Identify all unique product categories in the dataset.
-- **Null Value Check**: Check for any null values in the dataset and delete records with missing data.
-
-```
-SELECT COUNT (*)
-FROM [dbo].[Walmart_sales]
-```
-```
-SELECT payment_method, COUNT(*)  
-FROM walmart_sales
-GROUP BY payment_method
-```
-```
-SELECT COUNT(DISTINCT Branch) AS Unique_branch 
-FROM walmart_sales
-```
-```
-SELECT MAX(quantity),MIN(quantity)
-FROM walmart_sales
-```
-
-### 3. Business Problems
+**3.Business Problems**
 
 **--1. Find different payment method and number of transaction, number of qty sold**
 
@@ -115,40 +112,5 @@ SELECT Branch,
 FROM dailytransactioncount
 WHERE rank1 = 1
 
-**--4. Calculate the total quantity of items sold per payment method. List payment_method and total_quantity.**
 
-SELECT payment_method,
-       SUM(quantity) AS total_quantity_sold
-FROM [dbo].[walmart_sales]
-GROUP BY payment_method
-
-**--5. Determine the average, minimum and maximum rating of products for each city. List the city, average_rating, min_rating and max_rating.**
-
-SELECT City,
-       AVG(rating) AS AVG_rating,
-       MIN(rating) AS MIN_rating,
-       MAX(rating) AS MAX_rating
-FROM [dbo].[walmart_sales]
-GROUP BY City
-
-**--6. Calculate the total profit for each category by considering total_profit as (unit_price * quantity * profit_margin).**
-
-SELECT category,
-       SUM(unit_price * quantity * profit_margin) AS Total_profit
-FROM [dbo].[walmart_sales]
-GROUP BY category
-ORDER BY Total_profit DESC
-
-**--7. Determine the most common payment method for each Branch. Display Branch and the preferred_payment_method.**
-
-WITH Commonpaymentmethod AS(
-    SELECT Branch,
-           payment_method,
-           COUNT(payment_method) AS Preferred_payment_method,
-           RANK() OVER(PARTITION BY Branch ORDER BY COUNT(payment_method) DESC )AS rank1
-    FROM [dbo].[walmart_sales]
-    GROUP BY Branch, payment_method
-)
-SELECT * FROM Commonpaymentmethod
-WHERE rank1 = 1
 
