@@ -1,1 +1,7 @@
-# Walmart_sales_project_3
+# Walmart Sales Analysis 
+
+## Project Overview
+
+**Project Title**: Walmart Sales Analysis
+
+**Database Name**: 
