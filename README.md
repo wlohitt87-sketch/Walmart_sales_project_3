@@ -2,7 +2,27 @@
 
 ## Project Overview
 
-**Project Title**: Walmart Sales Analysis
+### Introduction
+
+The Walmart Sales Analysis project aims to explore and analyze sales data to uncover patterns, trends, and insights that can drive business decisions. The process involves data cleaning, transformation, and exploration using tools such as Python (Jupyter Notebook) and SQL Server.
+
+### 2. Importing Raw Data into Jupyter Notebook
+
+```
+!pip install opendatasets
+!pip install sqlalchemy pymysql
+!pip install pymysql
+import pandas as pd
+```
+
+```
+import opendatasets as od
+od.download("https://www.kaggle.com/datasets/najir0123/walmart-10k-sales-datasets")
+from sqlalchemy import create_engine
+```
+```
+df = pd.read_csv("/content/walmart-10k-sales-datasets/Walmart.csv")
+```    
 
 **Database Name**: 'Walmart_data'
 
