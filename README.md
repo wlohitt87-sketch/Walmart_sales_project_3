@@ -21,4 +21,4 @@ In order to examine, clean, and analyze retail sales data, data analysts often u
 
 - **Database Creation**: The project starts by creating a database named project_1.
 
-- **Table Creation** : 
+- **Table Creation**: A table named retail_sales is created to store the sales data. The table structure includes columns for transaction ID, sale date, sale     time, customer ID, gender, age, product category, quantity sold, price per unit, cost of goods sold (COGS), and total sale amount.
