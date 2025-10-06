@@ -54,7 +54,7 @@ files.download('walmart_sales.csv')
 
  1. **Set up a Walmart sales database** 
  2. **Exploratory Data Analysis (EDA)**
- 3. **Business Analysis**
+ 3. **Business Problem**
 
 **1. Database Setup**
 
